@@ -1,0 +1,5 @@
+source="*secure" process=sshd "password for" 
+| rex field=_raw "(?<result>Accepted|Failed) password for (?<username>\w+) from (?<ipaddr>[0-9A-Fa-f:\.]+)"
+|eval success=if(result=="Failed",0,1)
+|stats count as total,sum(success) as success by ipaddr
+|where total!=success AND success!=0
