@@ -8,3 +8,4 @@ source="*secure" process=sshd "password for"
 --
 
 source="*secure" process=sshd "password for" | rex field=_raw "(?<result>Accepted|Failed) password for (?<username>\w+) from (?<ipaddress>[0-9A-Fa-f:\.]+)" | iplocation ipaddress | rename Country as country | table _time,host,process,ipaddress,country,username,result
+
