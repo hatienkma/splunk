@@ -30,7 +30,7 @@ Các câu lệnh Splunk Fowarder. Linux giống Windows
 
 11. Set sourcetype: vào INPUT.conf thêm.
 
-12. Để add Monitor event log trên windows: Thêm đoạn sau vào file inputs.conf (C:\Program Files\SplunkUniversalForwarder\etc\system\local\inputs.conf)
+12. Để add Monitor event log trên windows: Thêm đoạn sau vào file inputs.conf (C:\Program Files\Splunk\etc\system\local\inputs.conf)
 
 [default]
 host = your_hostname
