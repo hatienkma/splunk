@@ -1,0 +1,86 @@
+Các câu lệnh Splunk Fowarder. Linux giống Windows
+
+1. Cài đặt Splunk Universal Forwarder Linux:
+	tar -xvf file.tgz -C /opt/
+	
+2. Cài trên Windows: Chọn IP nhận gói tin.
+
+3. Vào thư mục cài đặt -> Bin.
+
+4. Để start: ./splunk start --accept-license
+
+5. Để start cùng boot: ./splunk enable boot-start
+
+6. Thêm IP Forwarder: ./splunk add forward-server ip:port
+
+7. Xem list monitor: ./splunk list monitor
+
+8. Add file Monitor: 
+./splunk add monitor c:\windows\system32\LogFiles\W3SVC 
+./splunk add monitor "/var/log/secure*" 
+./splunk add monitor "/var/log/httpd/*" 
+./splunk add monitor "/var/log/messages*"
+./splunk add monitor "/data/x.txt"
+./splunk add monitor "/data/x/x*" -index newindex -sourcetype xsource
+
+9. Remove monitor: ./splunk remove monitor "c:\windows\system32\LogFiles\W3SVC"
+
+10. Nối 2 trường hiển thị 1 trường: 	
+	eval datetimes = date." ".time
+
+11. Set sourcetype: vào INPUT.conf thêm.
+
+12. Để add Monitor event log trên windows: Thêm đoạn sau vào file inputs.conf (C:\Program Files\SplunkUniversalForwarder\etc\system\local\inputs.conf)
+
+[default]
+host = your_hostname
+[WinEventLog://Application]
+disabled = 0 
+[WinEventLog://Security]
+disabled = 0 
+[WinEventLog://System]
+disabled = 0 
+[WinEventLog://Setup]
+disabled = 0 
+[WinEventLog://DNSServer]
+disabled = 0
+[WinNetMon://Network]
+disabled = 0
+# Queries computer information.
+[WinHostMon://computer]
+type = Computer
+interval = 300
+
+# Queries OS information. 
+# 'interval' set to a negative number tells Splunk Enterprise to
+# run the input once only. 
+[WinHostMon://os]
+type = operatingSystem
+interval = -1
+
+# Queries processor information.
+[WinHostMon://processor]
+type = processor
+interval = -1
+
+# Queries hard disk information.
+[WinHostMon://disk]
+type = disk
+interval = -1
+
+# Queries network adapter information.
+[WinHostMon://network]
+type = networkAdapter
+interval = -1
+
+# Queries service information.
+# This example runs the input ever 5 minutes.
+[WinHostMon://service]
+type = service
+interval = 300
+
+# Queries information on running processes.
+# This example runs the input every 5 minutes.
+[WinHostMon://process]
+type = process
+interval = 300 
