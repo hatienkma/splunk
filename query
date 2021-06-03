@@ -2,3 +2,6 @@ Not list file path $ROOT_HOME/etc/apps/search/lookups/
 
 
 {QUERY} NOT [|inputlookup list.csv] NOT cc_ip="" | dedup cc_ip| eval datetime=strftime(strptime(timestamp,"%Y-%m-%d %H:%M:%S")+25200, "%Y-%m-%d %H:%M:%S") | sort - timestamp | table datetime,cc_ip,cc_port
+
+Thống kê:
+- stats dc(Country) as count,values(Country) as Country by user | table user,Country,count
